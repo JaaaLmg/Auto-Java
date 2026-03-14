@@ -12,7 +12,9 @@ import org.slf4j.LoggerFactory;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 获取数据库表信息的工具类
@@ -73,6 +75,7 @@ public class BuildTable {
                 getKeyIndexInfo(tableInfo);
 
                 logger.info("tableInfo:{}", JsonUtils.convertObj2Json(tableInfo));
+                tableInfoList.add(tableInfo);
             }
         }catch (Exception e){
             logger.error("获取表信息失败",e);
@@ -164,13 +167,21 @@ public class BuildTable {
         }
     }
 
+    /**
+     * 获取数据库表索引信息
+     */
     public static void getKeyIndexInfo(TableInfo tableInfo){
         PreparedStatement ps = null;
         ResultSet fieldResult = null;
-        List<FieldInfo> fieldInfoList = new ArrayList<>();
         try {
             ps = conn.prepareStatement(String.format(SQL_SHOW_TABLE_INDEX, tableInfo.getTableName()));
             fieldResult = ps.executeQuery();
+
+            Map<String, FieldInfo> tempMap = new HashMap();
+            for(FieldInfo fieldInfo : tableInfo.getFieldList()){
+                tempMap.put(fieldInfo.getFieldName(), fieldInfo);
+            }
+
             while (fieldResult.next()){
                 String keyName = fieldResult.getString("key_name");
                 Integer nonUnique = fieldResult.getInt("non_unique");
@@ -181,11 +192,7 @@ public class BuildTable {
                     keyFieldList = new ArrayList<>();
                     tableInfo.getKeyIndexMap().put(keyName, keyFieldList);
                 }
-                for(FieldInfo fieldInfo : tableInfo.getFieldList()){
-                    if(fieldInfo.getFieldName().equals(columnName)){
-                        keyFieldList.add(fieldInfo);
-                    }
-                }
+                keyFieldList.add(tempMap.get(columnName));
             }
         }catch (Exception e){
             logger.error("读取索引失败",e);
