@@ -44,6 +44,10 @@ public class BuildPo {
                 bw.write("import java.util.Date;\n");
                 bw.write("import "+Constants.BEAN_DATE_FORMAT_IMPORT+";\n");
                 bw.write("import "+Constants.BEAN_DATE_UNFORMAT_IMPORT+";\n");
+                if(!Constants.IGNORE_TO_STRING){
+                    bw.write("import "+Constants.PACKAGE_UTILS+".DateUtils;\n");
+                    bw.write("import "+Constants.PACKAGE_ENUMS+".DateTimePatternEnum;\n");
+                }
             }
             for(FieldInfo fieldInfo : tableInfo.getFieldList()){
                 if(ArrayUtils.contains(Constants.IGNORE_BEAN_TOJSON_FIELD.split(","), fieldInfo.getPropertyName())){
@@ -101,7 +105,15 @@ public class BuildPo {
             if(!Constants.IGNORE_TO_STRING){
                 StringJoiner joiner = new StringJoiner(" + \"", "\"", "");
                 for(FieldInfo fieldInfo : tableInfo.getFieldList()){
-                    joiner.add("\\n\\t" + fieldInfo.getComment() + ":\" + (" + fieldInfo.getPropertyName() + " == null ? \"空\" : " + fieldInfo.getPropertyName() + ")");
+                    String propertyNameFormatted = fieldInfo.getPropertyName();
+
+                    if(ArrayUtils.contains(Constants.SQL_DATE_TIME_TYPES, fieldInfo.getSqlType())){
+                        propertyNameFormatted = "DateUtils.format(" + fieldInfo.getPropertyName() + ", DateTimePatternEnum.YYYY_MM_DD_HH_MM_SS.getPattern())";
+                    }else if(ArrayUtils.contains(Constants.SQL_DATE_TYPES, fieldInfo.getSqlType())){
+                        propertyNameFormatted = "DateUtils.format(" + fieldInfo.getPropertyName() + ", DateTimePatternEnum.YYYY_MM_DD.getPattern())";
+                    }
+
+                    joiner.add("\\n\\t" + fieldInfo.getComment() + ":\" + (" + fieldInfo.getPropertyName() + " == null ? \"空\" : " + propertyNameFormatted + ")");
                 }
                 String toString = joiner.toString();
 

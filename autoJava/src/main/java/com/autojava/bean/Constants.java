@@ -33,11 +33,15 @@ public class Constants {
     public static String PATH_JAVA = "java";
     public static String PATH_JAVA_BASE;
     public static String PATH_PO;
+    public static String PATH_UTILS;
+    public static String PATH_ENUMS;
 
     // 包名相关
     public static String PATH_RESOURCE = "resources";
     public static String PACKAGE_BASE;
     public static String PACKAGE_PO;
+    public static String PACKAGE_UTILS;
+    public static String PACKAGE_ENUMS;
 
     static {
         PROJECT_AUTHOR = PropertiesUtils.getString("project.author");
@@ -46,7 +50,7 @@ public class Constants {
         SUFFIX_BEAN_PARAM = PropertiesUtils.getString("suffix.bean.param");
 
         IGNORE_GETTER_SETTER = Boolean.valueOf(PropertiesUtils.getString("ignore.bean.getterSetter"));
-        IGNORE_TO_STRING = Boolean.valueOf(PropertiesUtils.getString("ignore.bean.tostring"));
+        IGNORE_TO_STRING = Boolean.valueOf(PropertiesUtils.getString("ignore.bean.toString"));
 
         // 需要忽略的属性
         IGNORE_BEAN_TOJSON_FIELD = PropertiesUtils.getString("ignore.bean.tojson.field");
@@ -61,12 +65,16 @@ public class Constants {
 
         // 基础路径
         PACKAGE_BASE = PropertiesUtils.getString("package.base");
+        PACKAGE_UTILS = PACKAGE_BASE + "." + PropertiesUtils.getString("package.utils");
+        PACKAGE_ENUMS = PACKAGE_BASE + "." + PropertiesUtils.getString("package.enums");
         PATH_BASE = PropertiesUtils.getString("path.base");
         PATH_JAVA_BASE = PATH_BASE + PATH_JAVA;
 
         // PO相关路径
         PACKAGE_PO = PACKAGE_BASE + "." + PropertiesUtils.getString("package.po");
         PATH_PO = PATH_JAVA_BASE + "/" + PACKAGE_PO.replace(".", "/");
+        PATH_UTILS = PATH_JAVA_BASE + "/" + PACKAGE_UTILS.replace(".", "/");
+        PATH_ENUMS = PATH_JAVA_BASE + "/" + PACKAGE_ENUMS.replace(".", "/");
     }
 
     public static final String[] SQL_DATE_TIME_TYPES = new String[]{"datetime", "timestamp"};
