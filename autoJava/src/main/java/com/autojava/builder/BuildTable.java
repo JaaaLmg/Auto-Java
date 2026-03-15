@@ -67,7 +67,7 @@ public class BuildTable {
                 tableInfo.setTableName(tableName);
                 tableInfo.setBeanName(beanName);
                 tableInfo.setComment(comment);
-                tableInfo.setBeanParamName(beanName + Constants.SUFFIX_BEAN_PARAM);
+                tableInfo.setBeanParamName(beanName + Constants.SUFFIX_BEAN_QUERY);
                 //logger.info("表名:{} , 注释:{} , JavaBean:{} , JavaParamBean:{}", tableInfo.getTableName(), tableInfo.getComment(), tableInfo.getBeanName(), tableInfo.getBeanParamName());
 
                 readFieldInfo(tableInfo);

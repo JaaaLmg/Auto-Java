@@ -11,7 +11,10 @@ public class Constants {
 
     // 命名相关
     public static Boolean IGNORE_TABLE_PRIFIX;
-    public static String SUFFIX_BEAN_PARAM;
+    public static String SUFFIX_BEAN_QUERY;
+    public static String SUFFIX_BEAN_QUERY_FUZZY;
+    public static String SUFFIX_BEAN_QUERY_TIME_START;
+    public static String SUFFIX_BEAN_QUERY_TIME_END;
 
     // 属性相关
     public static String IGNORE_BEAN_TOJSON_FIELD;
@@ -33,6 +36,7 @@ public class Constants {
     public static String PATH_JAVA = "java";
     public static String PATH_JAVA_BASE;
     public static String PATH_PO;
+    public static String PATH_QUERY;
     public static String PATH_UTILS;
     public static String PATH_ENUMS;
 
@@ -40,6 +44,7 @@ public class Constants {
     public static String PATH_RESOURCE = "resources";
     public static String PACKAGE_BASE;
     public static String PACKAGE_PO;
+    public static String PACKAGE_QUERY;
     public static String PACKAGE_UTILS;
     public static String PACKAGE_ENUMS;
 
@@ -47,7 +52,10 @@ public class Constants {
         PROJECT_AUTHOR = PropertiesUtils.getString("project.author");
 
         IGNORE_TABLE_PRIFIX = Boolean.valueOf(PropertiesUtils.getString("ignore.table.prefix"));
-        SUFFIX_BEAN_PARAM = PropertiesUtils.getString("suffix.bean.param");
+        SUFFIX_BEAN_QUERY = PropertiesUtils.getString("suffix.bean.query");
+        SUFFIX_BEAN_QUERY_FUZZY = PropertiesUtils.getString("suffix.bean.query.fuzzy");
+        SUFFIX_BEAN_QUERY_TIME_START = PropertiesUtils.getString("suffix.bean.query.time.start");
+        SUFFIX_BEAN_QUERY_TIME_END = PropertiesUtils.getString("suffix.bean.query.time.end");
 
         IGNORE_GETTER_SETTER = Boolean.valueOf(PropertiesUtils.getString("ignore.bean.getterSetter"));
         IGNORE_TO_STRING = Boolean.valueOf(PropertiesUtils.getString("ignore.bean.toString"));
@@ -73,6 +81,11 @@ public class Constants {
         // PO相关路径
         PACKAGE_PO = PACKAGE_BASE + "." + PropertiesUtils.getString("package.po");
         PATH_PO = PATH_JAVA_BASE + "/" + PACKAGE_PO.replace(".", "/");
+
+        // Query相关路径
+        PACKAGE_QUERY = PACKAGE_BASE + "." + PropertiesUtils.getString("package.query");
+        PATH_QUERY = PATH_JAVA_BASE + "/" + PACKAGE_QUERY.replace(".", "/");
+
         PATH_UTILS = PATH_JAVA_BASE + "/" + PACKAGE_UTILS.replace(".", "/");
         PATH_ENUMS = PATH_JAVA_BASE + "/" + PACKAGE_ENUMS.replace(".", "/");
     }

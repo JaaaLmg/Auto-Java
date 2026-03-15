@@ -157,12 +157,4 @@ public class ProductInfo implements Serializable {
 	public String toString() {
 		return "商品信息 [" + "\n\t自增ID:" + (id == null ? "空" : id) + "\n\t公司ID:" + (companyId == null ? "空" : companyId) + "\n\t商品编号:" + (code == null ? "空" : code) + "\n\t商品名称:" + (productName == null ? "空" : productName) + "\n\t价格:" + (price == null ? "空" : price) + "\n\tsku类型:" + (skuType == null ? "空" : skuType) + "\n\t颜色类型:" + (colorType == null ? "空" : colorType) + "\n\t创建时间:" + (createTime == null ? "空" : DateUtils.format(createTime, DateTimePatternEnum.YYYY_MM_DD_HH_MM_SS.getPattern())) + "\n\t创建日期:" + (createDate == null ? "空" : DateUtils.format(createDate, DateTimePatternEnum.YYYY_MM_DD.getPattern())) + "\n\t库存:" + (stock == null ? "空" : stock) + "\n\t状态:" + (status == null ? "空" : status) + "\n]";
 	}
-
-	public static void main(String[] args) {
-		ProductInfo productInfo = new ProductInfo();
-		productInfo.setId(1);
-		productInfo.setCreateDate(new Date());
-		productInfo.setCreateTime(new Date());
-		System.out.println(productInfo);
-	}
 }

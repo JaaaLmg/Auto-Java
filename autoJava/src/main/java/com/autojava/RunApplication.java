@@ -2,6 +2,7 @@ package com.autojava;
 
 import com.autojava.bean.TableInfo;
 import com.autojava.builder.BuildPo;
+import com.autojava.builder.BuildQuery;
 import com.autojava.builder.BuildTable;
 import com.autojava.builder.BuildUtils;
 
@@ -15,6 +16,7 @@ public class RunApplication {
 
         for(TableInfo tableInfo : tableInfoList){
             BuildPo.execute(tableInfo);
+            BuildQuery.execute(tableInfo);
         }
     }
 }
