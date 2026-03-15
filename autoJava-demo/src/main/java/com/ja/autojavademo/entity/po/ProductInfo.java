@@ -16,62 +16,62 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 public class ProductInfo implements Serializable {
 	/**
-	 *自增ID
+	 * 自增ID
 	 */
 	private Integer id;
 
 	/**
-	 *公司ID
+	 * 公司ID
 	 */
 	@JsonIgnore
 	private String companyId;
 
 	/**
-	 *商品编号
+	 * 商品编号
 	 */
 	private String code;
 
 	/**
-	 *商品名称
+	 * 商品名称
 	 */
 	private String productName;
 
 	/**
-	 *价格
+	 * 价格
 	 */
 	private BigDecimal price;
 
 	/**
-	 *sku类型
+	 * sku类型
 	 */
 	private Integer skuType;
 
 	/**
-	 *颜色类型
+	 * 颜色类型
 	 */
 	private Integer colorType;
 
 	/**
-	 *创建时间
+	 * 创建时间
 	 */
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
 	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	private Date createTime;
 
 	/**
-	 *创建日期
+	 * 创建日期
 	 */
 	@JsonFormat(pattern="yyyy-MM-dd",timezone="GMT+8")
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date createDate;
 
 	/**
-	 *库存
+	 * 库存
 	 */
 	private Long stock;
 
 	/**
-	 *状态
+	 * 状态
 	 */
 	@JsonIgnore
 	private Integer status;

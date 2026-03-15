@@ -23,7 +23,7 @@ public class BuildQuery {
         if(!folder.exists()) folder.mkdirs();
 
         // 创建文件
-        File file = new File(folder, tableInfo.getBeanName() + "Query.java");
+        File file = new File(folder, tableInfo.getBeanName() + Constants.SUFFIX_BEAN_QUERY + ".java");
         try {
             file.createNewFile();
         } catch (IOException e) {

@@ -23,11 +23,11 @@ public class BuildComment {
 
     public static void createFieldComment(BufferedWriter bw, String comment) throws Exception{
         bw.write("\t/**\n");
-        bw.write("\t *" + comment + "\n");
+        bw.write("\t * " + comment + "\n");
         bw.write("\t */\n");
     }
 
-    public static void createMethodComment(){
+    public static void createMethodComment(BufferedWriter bw, String comment){
 
     }
 }

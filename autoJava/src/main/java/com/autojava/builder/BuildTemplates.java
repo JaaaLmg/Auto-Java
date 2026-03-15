@@ -8,8 +8,11 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BuildUtils {
-    private static Logger logger = LoggerFactory.getLogger(BuildUtils.class);
+/**
+ * 构建由模板生成的类
+ */
+public class BuildTemplates {
+    private static Logger logger = LoggerFactory.getLogger(BuildTemplates.class);
 
     public static void execute() {
         List<String> headerInfoList = new ArrayList<>();
@@ -20,8 +23,15 @@ public class BuildUtils {
 
         headerInfoList.clear();
 
+        // 生成date工具类
         headerInfoList.add("package " + Constants.PACKAGE_UTILS + ";\n");
         build(headerInfoList,"DateUtils", Constants.PATH_UTILS);
+
+        headerInfoList.clear();
+
+        // 生成baseMapper
+        headerInfoList.add("package " + Constants.PACKAGE_MAPPERS + ";\n");
+        build(headerInfoList,"BaseMapper", Constants.PATH_MAPPERS);
     }
 
     public static void build(List<String> headerInfoList, String fileName, String outputPath) {
@@ -29,7 +39,7 @@ public class BuildUtils {
         if(!folder.exists()) folder.mkdirs();
         File javaFile = new File(outputPath, fileName + ".java");
 
-        String templatePath = BuildUtils.class.getClassLoader().getResource("template/" + fileName + ".txt").getPath();
+        String templatePath = BuildTemplates.class.getClassLoader().getResource("template/" + fileName + ".txt").getPath();
 
         try (OutputStream out = new FileOutputStream(javaFile);
              OutputStreamWriter outw = new OutputStreamWriter(out, "utf-8");

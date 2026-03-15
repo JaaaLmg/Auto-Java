@@ -15,6 +15,7 @@ public class Constants {
     public static String SUFFIX_BEAN_QUERY_FUZZY;
     public static String SUFFIX_BEAN_QUERY_TIME_START;
     public static String SUFFIX_BEAN_QUERY_TIME_END;
+    public static String SUFFIX_MAPPERS;
 
     // 属性相关
     public static String IGNORE_BEAN_TOJSON_FIELD;
@@ -37,6 +38,7 @@ public class Constants {
     public static String PATH_JAVA_BASE;
     public static String PATH_PO;
     public static String PATH_QUERY;
+    public static String PATH_MAPPERS;
     public static String PATH_UTILS;
     public static String PATH_ENUMS;
 
@@ -45,6 +47,7 @@ public class Constants {
     public static String PACKAGE_BASE;
     public static String PACKAGE_PO;
     public static String PACKAGE_QUERY;
+    public static String PACKAGE_MAPPERS;
     public static String PACKAGE_UTILS;
     public static String PACKAGE_ENUMS;
 
@@ -56,6 +59,7 @@ public class Constants {
         SUFFIX_BEAN_QUERY_FUZZY = PropertiesUtils.getString("suffix.bean.query.fuzzy");
         SUFFIX_BEAN_QUERY_TIME_START = PropertiesUtils.getString("suffix.bean.query.time.start");
         SUFFIX_BEAN_QUERY_TIME_END = PropertiesUtils.getString("suffix.bean.query.time.end");
+        SUFFIX_MAPPERS = PropertiesUtils.getString("suffix.mappers");
 
         IGNORE_GETTER_SETTER = Boolean.valueOf(PropertiesUtils.getString("ignore.bean.getterSetter"));
         IGNORE_TO_STRING = Boolean.valueOf(PropertiesUtils.getString("ignore.bean.toString"));
@@ -85,6 +89,10 @@ public class Constants {
         // Query相关路径
         PACKAGE_QUERY = PACKAGE_BASE + "." + PropertiesUtils.getString("package.query");
         PATH_QUERY = PATH_JAVA_BASE + "/" + PACKAGE_QUERY.replace(".", "/");
+
+        // Mapper相关路径
+        PACKAGE_MAPPERS = PACKAGE_BASE + "." + PropertiesUtils.getString("package.mappers");
+        PATH_MAPPERS = PATH_JAVA_BASE + "/" + PACKAGE_MAPPERS.replace(".", "/");
 
         PATH_UTILS = PATH_JAVA_BASE + "/" + PACKAGE_UTILS.replace(".", "/");
         PATH_ENUMS = PATH_JAVA_BASE + "/" + PACKAGE_ENUMS.replace(".", "/");

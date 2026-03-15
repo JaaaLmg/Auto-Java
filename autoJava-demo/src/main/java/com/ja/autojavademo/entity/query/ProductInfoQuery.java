@@ -10,64 +10,64 @@ import java.util.Date;
  */
 public class ProductInfoQuery {
 	/**
-	 *自增ID
+	 * 自增ID
 	 */
 	private Integer id;
 
 	/**
-	 *公司ID
+	 * 公司ID
 	 */
 	private String companyId;
 	private String companyIdFuzzy;
 
 	/**
-	 *商品编号
+	 * 商品编号
 	 */
 	private String code;
 	private String codeFuzzy;
 
 	/**
-	 *商品名称
+	 * 商品名称
 	 */
 	private String productName;
 	private String productNameFuzzy;
 
 	/**
-	 *价格
+	 * 价格
 	 */
 	private BigDecimal price;
 
 	/**
-	 *sku类型
+	 * sku类型
 	 */
 	private Integer skuType;
 
 	/**
-	 *颜色类型
+	 * 颜色类型
 	 */
 	private Integer colorType;
 
 	/**
-	 *创建时间
+	 * 创建时间
 	 */
 	private Date createTime;
 	private String createTimeStart;
 	private String createTimeEnd;
 
 	/**
-	 *创建日期
+	 * 创建日期
 	 */
 	private Date createDate;
 	private String createDateStart;
 	private String createDateEnd;
 
 	/**
-	 *库存
+	 * 库存
 	 */
 	private Long stock;
 
 	/**
-	 *状态
+	 * 状态
 	 */
 	private Integer status;
 
