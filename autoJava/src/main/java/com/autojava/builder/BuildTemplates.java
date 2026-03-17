@@ -20,18 +20,33 @@ public class BuildTemplates {
         // 生成date枚举
         headerInfoList.add("package " + Constants.PACKAGE_ENUMS + ";\n");
         build(headerInfoList,"DateTimePatternEnum", Constants.PATH_ENUMS);
-
         headerInfoList.clear();
 
         // 生成date工具类
         headerInfoList.add("package " + Constants.PACKAGE_UTILS + ";\n");
         build(headerInfoList,"DateUtils", Constants.PATH_UTILS);
-
         headerInfoList.clear();
 
         // 生成baseMapper
         headerInfoList.add("package " + Constants.PACKAGE_MAPPERS + ";\n");
         build(headerInfoList,"BaseMapper", Constants.PATH_MAPPERS);
+        headerInfoList.clear();
+
+        // 生成PageSize枚举
+        headerInfoList.add("package " + Constants.PACKAGE_ENUMS + ";\n");
+        build(headerInfoList,"PageSize", Constants.PATH_ENUMS);
+        headerInfoList.clear();
+
+        // 生成SimplePage类
+        headerInfoList.add("package " + Constants.PACKAGE_QUERY + ";\n");
+        headerInfoList.add("import " + Constants.PACKAGE_ENUMS + ".PageSize;\n");
+        build(headerInfoList,"SimplePage", Constants.PATH_QUERY);
+        headerInfoList.clear();
+
+        // 生成query基类
+        headerInfoList.add("package " + Constants.PACKAGE_QUERY + ";\n");
+        build(headerInfoList,"BaseQuery", Constants.PATH_QUERY);
+        headerInfoList.clear();
     }
 
     public static void build(List<String> headerInfoList, String fileName, String outputPath) {

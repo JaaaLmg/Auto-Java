@@ -8,7 +8,7 @@ import java.util.Date;
  * @Author LumingJia
  * @Date 2026/03/17
  */
-public class ProductInfoQuery {
+public class ProductInfoQuery extends BaseQuery {
 	/**
 	 * 自增ID
 	 */

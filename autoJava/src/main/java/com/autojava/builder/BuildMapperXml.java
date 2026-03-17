@@ -39,6 +39,7 @@ public class BuildMapperXml {
             generateBaseQueryConditions(tableInfo, bw);  // 生成基础查询条件
             generateExtendQueryConditions(tableInfo, bw);   // 生成扩展查询条件
             generateWholeQueryConditions(tableInfo, bw);    // 生成完整查询条件子句
+            generateWholeQueryStatement(tableInfo, bw);     // 生成完整查询语句
 
             bw.newLine();
             bw.write("</mapper>");
@@ -193,6 +194,34 @@ public class BuildMapperXml {
         bw.write("\t\t</where>\n");
         bw.write("\t</sql>\n");
         bw.newLine();
+    }
+
+    /**
+     * 生成完整的查询语句
+     */
+    private static void generateWholeQueryStatement(TableInfo tableInfo, BufferedWriter bw) throws IOException{
+        bw.write("\t<!--查询集合的语句-->\n");
+        bw.write("\t<select id=\"selectList\" resultMap=\"base_result_map\">\n");
+        bw.write("\t\tSELECT\n");
+        bw.write("\t\t<include refid=\"base_column_list\"/>\n");
+        bw.write("\t\tFROM " + tableInfo.getTableName() + "\n");
+        bw.write("\t\t<include refid=\"query_condition\"/>\n");
+        bw.write("\t\t<if test=\"query.orderBy != null\">\n");
+        bw.write("\t\t\tORDER BY ${query.orderBy}\n");
+        bw.write("\t\t</if>\n");
+        bw.write("\t\t<if test=\"query.simplePage != null\">\n");
+        bw.write("\t\t\tLIMIT #{query.simplePage.start},#{query.simplePage.offset}\n");
+        bw.write("\t\t</if>\n");
+        bw.write("\t</select>\n");
+        bw.newLine();
+
+        bw.write("\t<!--查询数量的语句-->\n");
+        bw.write("\t<select id=\"selectCount\" resultType=\"java.lang.Integer\">\n");
+        bw.write("\t\tSELECT count(1) FROM " + tableInfo.getTableName() + "\n");
+        bw.write("\t\t<include refid=\"query_condition\"/>\n");
+        bw.write("\t</select>\n");
+        bw.newLine();
+
     }
 
 }

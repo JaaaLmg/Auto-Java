@@ -47,7 +47,7 @@ public class BuildQuery {
             // 生成类注释
             BuildComment.createClassComment(bw, tableInfo.getComment()+"查询对象");
 
-            bw.write("public class "+ tableInfo.getBeanName() + "Query {\n");
+            bw.write("public class "+ tableInfo.getBeanName() + "Query extends BaseQuery {\n");
 
             // 创建字段
             List<FieldInfo> extendFieldList = new ArrayList<>(tableInfo.getFieldList());
