@@ -39,6 +39,7 @@ public class Constants {
     public static String PATH_PO;
     public static String PATH_QUERY;
     public static String PATH_MAPPERS;
+    public static String PATH_MAPPERS_XML;
     public static String PATH_UTILS;
     public static String PATH_ENUMS;
 
@@ -93,6 +94,7 @@ public class Constants {
         // Mapper相关路径
         PACKAGE_MAPPERS = PACKAGE_BASE + "." + PropertiesUtils.getString("package.mappers");
         PATH_MAPPERS = PATH_JAVA_BASE + "/" + PACKAGE_MAPPERS.replace(".", "/");
+        PATH_MAPPERS_XML = PATH_BASE + PATH_RESOURCE + "/" +PACKAGE_MAPPERS.replace(".", "/");
 
         PATH_UTILS = PATH_JAVA_BASE + "/" + PACKAGE_UTILS.replace(".", "/");
         PATH_ENUMS = PATH_JAVA_BASE + "/" + PACKAGE_ENUMS.replace(".", "/");
@@ -106,8 +108,9 @@ public class Constants {
     public static final String[] SQL_LONG_TYPES = new String[]{"bigint"};
 
     public static void main(String[] args) {
-        System.out.println(PATH_JAVA_BASE);
-        System.out.println(PACKAGE_BASE);
-        System.out.println(PATH_PO);
+//        System.out.println(PATH_JAVA_BASE);
+//        System.out.println(PACKAGE_BASE);
+//        System.out.println(PATH_PO);
+        System.out.println(PATH_MAPPERS_XML);
     }
 }

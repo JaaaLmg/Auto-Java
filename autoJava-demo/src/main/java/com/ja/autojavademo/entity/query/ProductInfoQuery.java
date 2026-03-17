@@ -6,7 +6,7 @@ import java.util.Date;
 /**
  * @Description 商品信息查询对象
  * @Author LumingJia
- * @Date 2026/03/15
+ * @Date 2026/03/17
  */
 public class ProductInfoQuery {
 	/**
