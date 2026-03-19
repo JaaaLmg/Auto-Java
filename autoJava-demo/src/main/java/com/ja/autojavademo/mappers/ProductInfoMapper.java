@@ -16,12 +16,12 @@ public interface ProductInfoMapper<T, P> extends BaseMapper {
 	/**
 	 * 根据Id更新
 	 */
-	Long updateById(@Param("bean") T t, @Param("id") Integer id);
+	Integer updateById(@Param("bean") T t, @Param("id") Integer id);
 
 	/**
 	 * 根据Id删除
 	 */
-	Long deleteById(@Param("id") Integer id);
+	Integer deleteById(@Param("id") Integer id);
 
 	/**
 	 * 根据Code查询
@@ -31,12 +31,12 @@ public interface ProductInfoMapper<T, P> extends BaseMapper {
 	/**
 	 * 根据Code更新
 	 */
-	Long updateByCode(@Param("bean") T t, @Param("code") String code);
+	Integer updateByCode(@Param("bean") T t, @Param("code") String code);
 
 	/**
 	 * 根据Code删除
 	 */
-	Long deleteByCode(@Param("code") String code);
+	Integer deleteByCode(@Param("code") String code);
 
 	/**
 	 * 根据SkuType和ColorType查询
@@ -46,11 +46,11 @@ public interface ProductInfoMapper<T, P> extends BaseMapper {
 	/**
 	 * 根据SkuType和ColorType更新
 	 */
-	Long updateBySkuTypeAndColorType(@Param("bean") T t, @Param("skuType") Integer skuType, @Param("colorType") Integer colorType);
+	Integer updateBySkuTypeAndColorType(@Param("bean") T t, @Param("skuType") Integer skuType, @Param("colorType") Integer colorType);
 
 	/**
 	 * 根据SkuType和ColorType删除
 	 */
-	Long deleteBySkuTypeAndColorType(@Param("skuType") Integer skuType, @Param("colorType") Integer colorType);
+	Integer deleteBySkuTypeAndColorType(@Param("skuType") Integer skuType, @Param("colorType") Integer colorType);
 
 }

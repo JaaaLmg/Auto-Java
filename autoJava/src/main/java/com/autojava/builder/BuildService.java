@@ -53,15 +53,15 @@ public class BuildService {
             BuildComment.createMethodComment(bw, "根据查询条件查询列表");
             bw.write("\tList<" + tableInfo.getBeanName() + "> queryList(" + tableInfo.getBeanName() + Constants.SUFFIX_BEAN_QUERY + " query);\n\n");
             BuildComment.createMethodComment(bw, "根据查询条件查询数量");
-            bw.write("\tLong queryCount(" + tableInfo.getBeanName() + Constants.SUFFIX_BEAN_QUERY + " query);\n\n");
+            bw.write("\tInteger queryCount(" + tableInfo.getBeanName() + Constants.SUFFIX_BEAN_QUERY + " query);\n\n");
             BuildComment.createMethodComment(bw, "分页查询");
             bw.write("\tPaginationResultVO<" + tableInfo.getBeanName() + "> queryPage(" + tableInfo.getBeanName() + Constants.SUFFIX_BEAN_QUERY + " query);\n\n");
             BuildComment.createMethodComment(bw, "新增");
-            bw.write("\tLong add(" + tableInfo.getBeanName() + " bean);\n\n");
+            bw.write("\tInteger add(" + tableInfo.getBeanName() + " bean);\n\n");
             BuildComment.createMethodComment(bw, "批量新增");
-            bw.write("\tLong addBatch(List<" + tableInfo.getBeanName() + "> listBean);\n\n");
+            bw.write("\tInteger addBatch(List<" + tableInfo.getBeanName() + "> listBean);\n\n");
             BuildComment.createMethodComment(bw, "批量新增或修改");
-            bw.write("\tLong addOrUpdateBatch(List<" + tableInfo.getBeanName() + "> listBean);\n\n");
+            bw.write("\tInteger addOrUpdateBatch(List<" + tableInfo.getBeanName() + "> listBean);\n\n");
 
             // 主键相关方法
             Map<String, List<FieldInfo>> keyIndexMap = tableInfo.getKeyIndexMap();
@@ -87,11 +87,11 @@ public class BuildService {
                 bw.newLine();
 
                 BuildComment.createFieldComment(bw, CommentNameJoiner.toString()+"更新");   // 生成方法注释
-                bw.write("\tLong update" + tableInfo.getBeanName() + "By" + keyMethodNameJoiner.toString() + "(List<" + tableInfo.getBeanName() + "> listBean, " + keyMethodParamJoiner.toString() + ");\n\n");    // 生成方法
+                bw.write("\tInteger update" + tableInfo.getBeanName() + "By" + keyMethodNameJoiner.toString() + "(" + tableInfo.getBeanName() + " bean, " + keyMethodParamJoiner.toString() + ");\n\n");    // 生成方法
                 bw.newLine();
 
                 BuildComment.createFieldComment(bw, CommentNameJoiner.toString()+"删除");   // 生成方法注释
-                bw.write("\tLong delete" + tableInfo.getBeanName() +"By" + keyMethodNameJoiner.toString() + "(" + keyMethodParamJoiner.toString() + ");\n\n");    // 生成方法
+                bw.write("\tInteger delete" + tableInfo.getBeanName() +"By" + keyMethodNameJoiner.toString() + "(" + keyMethodParamJoiner.toString() + ");\n\n");    // 生成方法
                 bw.newLine();
             }
 

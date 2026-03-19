@@ -2,7 +2,7 @@ package com.ja.autojavademo.entity.query;
 
 public class BaseQuery {
     private SimplePage simplePage;
-    private Integer pageNO;
+    private Integer pageNo;
     private Integer pageSize;
     private String orderBy;
 
@@ -14,12 +14,12 @@ public class BaseQuery {
         this.simplePage = simplePage;
     }
 
-    public Integer getPageNO() {
-        return pageNO;
+    public Integer getPageNo() {
+        return pageNo;
     }
 
-    public void setPageNO(Integer pageNO) {
-        this.pageNO = pageNO;
+    public void setPageNo(Integer pageNo) {
+        this.pageNo = pageNo;
     }
 
     public Integer getPageSize() {

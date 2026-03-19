@@ -221,7 +221,7 @@ public class BuildMapperXml {
         bw.newLine();
 
         bw.write("\t<!--查询数量的语句-->\n");
-        bw.write("\t<select id=\"selectCount\" resultType=\"java.lang.Long\">\n");
+        bw.write("\t<select id=\"selectCount\" resultType=\"java.lang.Integer\">\n");
         bw.write("\t\tSELECT count(1) FROM " + tableInfo.getTableName() + "\n");
         bw.write("\t\t<include refid=\"query_condition\"/>\n");
         bw.write("\t</select>\n");

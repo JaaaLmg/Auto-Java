@@ -19,7 +19,7 @@ public interface ProductInfoService {
 	/**
 	 * 根据查询条件查询数量
 	 */
-	Long queryCount(ProductInfoQuery query);
+	Integer queryCount(ProductInfoQuery query);
 
 	/**
 	 * 分页查询
@@ -29,17 +29,17 @@ public interface ProductInfoService {
 	/**
 	 * 新增
 	 */
-	Long add(ProductInfo bean);
+	Integer add(ProductInfo bean);
 
 	/**
 	 * 批量新增
 	 */
-	Long addBatch(List<ProductInfo> listBean);
+	Integer addBatch(List<ProductInfo> listBean);
 
 	/**
 	 * 批量新增或修改
 	 */
-	Long addOrUpdateBatch(List<ProductInfo> listBean);
+	Integer addOrUpdateBatch(List<ProductInfo> listBean);
 
 	/**
 	 * 根据Id查询
@@ -50,13 +50,13 @@ public interface ProductInfoService {
 	/**
 	 * 根据Id更新
 	 */
-	Long updateProductInfoById(List<ProductInfo> listBean, Integer id);
+	Integer updateProductInfoById(ProductInfo bean, Integer id);
 
 
 	/**
 	 * 根据Id删除
 	 */
-	Long deleteProductInfoById(Integer id);
+	Integer deleteProductInfoById(Integer id);
 
 
 	/**
@@ -68,13 +68,13 @@ public interface ProductInfoService {
 	/**
 	 * 根据Code更新
 	 */
-	Long updateProductInfoByCode(List<ProductInfo> listBean, String code);
+	Integer updateProductInfoByCode(ProductInfo bean, String code);
 
 
 	/**
 	 * 根据Code删除
 	 */
-	Long deleteProductInfoByCode(String code);
+	Integer deleteProductInfoByCode(String code);
 
 
 	/**
@@ -86,13 +86,13 @@ public interface ProductInfoService {
 	/**
 	 * 根据SkuType和ColorType更新
 	 */
-	Long updateProductInfoBySkuTypeAndColorType(List<ProductInfo> listBean, Integer skuType, Integer colorType);
+	Integer updateProductInfoBySkuTypeAndColorType(ProductInfo bean, Integer skuType, Integer colorType);
 
 
 	/**
 	 * 根据SkuType和ColorType删除
 	 */
-	Long deleteProductInfoBySkuTypeAndColorType(Integer skuType, Integer colorType);
+	Integer deleteProductInfoBySkuTypeAndColorType(Integer skuType, Integer colorType);
 
 
 }

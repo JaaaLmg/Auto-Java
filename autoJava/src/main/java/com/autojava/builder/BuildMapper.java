@@ -67,11 +67,11 @@ public class BuildMapper {
                 bw.newLine();
 
                 BuildComment.createFieldComment(bw, CommentNameJoiner.toString()+"更新");   // 生成方法注释
-                bw.write("\tLong updateBy" + keyMethodNameJoiner.toString() + "(@Param(\"bean\") T t, " + keyMethodParamJoiner.toString() + ");\n");    // 生成方法
+                bw.write("\tInteger updateBy" + keyMethodNameJoiner.toString() + "(@Param(\"bean\") T t, " + keyMethodParamJoiner.toString() + ");\n");    // 生成方法
                 bw.newLine();
 
                 BuildComment.createFieldComment(bw, CommentNameJoiner.toString()+"删除");   // 生成方法注释
-                bw.write("\tLong deleteBy" + keyMethodNameJoiner.toString() + "(" + keyMethodParamJoiner.toString() + ");\n");    // 生成方法
+                bw.write("\tInteger deleteBy" + keyMethodNameJoiner.toString() + "(" + keyMethodParamJoiner.toString() + ");\n");    // 生成方法
                 bw.newLine();
             }
 

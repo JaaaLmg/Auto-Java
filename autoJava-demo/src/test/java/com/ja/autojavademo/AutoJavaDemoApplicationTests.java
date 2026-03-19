@@ -29,7 +29,7 @@ class AutoJavaDemoApplicationTests {
             System.out.println(data);
         }
 
-        Long count = productInfoMapper.selectCount(demoQuery);
+        Integer count = productInfoMapper.selectCount(demoQuery);
         System.out.println(count);
     }
 
@@ -46,7 +46,7 @@ class AutoJavaDemoApplicationTests {
         demoProduct.setCreateDate(new java.util.Date());
         demoProduct.setStock(1000L);
         demoProduct.setStatus(1);
-        Long result = productInfoMapper.insert(demoProduct);
+        Integer result = productInfoMapper.insert(demoProduct);
         System.out.println(result);
         System.out.println(demoProduct.getId());
     }

@@ -17,6 +17,7 @@ public class RunApplication {
             BuildMapper.execute(tableInfo);
             BuildMapperXml.execute(tableInfo);
             BuildService.execute(tableInfo);
+            BuildServiceImpl.execute(tableInfo);
         }
     }
 }
