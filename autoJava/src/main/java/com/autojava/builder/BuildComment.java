@@ -27,7 +27,9 @@ public class BuildComment {
         bw.write("\t */\n");
     }
 
-    public static void createMethodComment(BufferedWriter bw, String comment){
-
+    public static void createMethodComment(BufferedWriter bw, String comment) throws Exception{
+        bw.write("\t/**\n");
+        bw.write("\t * " + comment + "\n");
+        bw.write("\t */\n");
     }
 }

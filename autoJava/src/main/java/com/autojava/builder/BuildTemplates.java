@@ -47,6 +47,10 @@ public class BuildTemplates {
         headerInfoList.add("package " + Constants.PACKAGE_QUERY + ";\n");
         build(headerInfoList,"BaseQuery", Constants.PATH_QUERY);
         headerInfoList.clear();
+
+        // 生成分页结果类
+        headerInfoList.add("package " + Constants.PACKAGE_VO + ";\n");
+        build(headerInfoList,"PaginationResultVO", Constants.PATH_VO);
     }
 
     public static void build(List<String> headerInfoList, String fileName, String outputPath) {

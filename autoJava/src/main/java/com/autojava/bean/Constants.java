@@ -16,6 +16,7 @@ public class Constants {
     public static String SUFFIX_BEAN_QUERY_TIME_START;
     public static String SUFFIX_BEAN_QUERY_TIME_END;
     public static String SUFFIX_MAPPERS;
+    public static String SUFFIX_SERVICE;
 
     // 属性相关
     public static String IGNORE_BEAN_TOJSON_FIELD;
@@ -42,6 +43,9 @@ public class Constants {
     public static String PATH_MAPPERS_XML;
     public static String PATH_UTILS;
     public static String PATH_ENUMS;
+    public static String PATH_SERVICE;
+    public static String PATH_SERVICE_IMPL;
+    public static String PATH_VO;
 
     // 包名相关
     public static String PATH_RESOURCE = "resources";
@@ -51,6 +55,9 @@ public class Constants {
     public static String PACKAGE_MAPPERS;
     public static String PACKAGE_UTILS;
     public static String PACKAGE_ENUMS;
+    public static String PACKAGE_SERVICE;
+    public static String PACKAGE_SERVICE_IMPL;
+    public static String PACKAGE_VO;
 
     static {
         PROJECT_AUTHOR = PropertiesUtils.getString("project.author");
@@ -61,6 +68,7 @@ public class Constants {
         SUFFIX_BEAN_QUERY_TIME_START = PropertiesUtils.getString("suffix.bean.query.time.start");
         SUFFIX_BEAN_QUERY_TIME_END = PropertiesUtils.getString("suffix.bean.query.time.end");
         SUFFIX_MAPPERS = PropertiesUtils.getString("suffix.mappers");
+        SUFFIX_SERVICE = PropertiesUtils.getString("suffix.service");
 
         IGNORE_GETTER_SETTER = Boolean.valueOf(PropertiesUtils.getString("ignore.bean.getterSetter"));
         IGNORE_TO_STRING = Boolean.valueOf(PropertiesUtils.getString("ignore.bean.toString"));
@@ -96,6 +104,16 @@ public class Constants {
         PATH_MAPPERS = PATH_JAVA_BASE + "/" + PACKAGE_MAPPERS.replace(".", "/");
         PATH_MAPPERS_XML = PATH_BASE + PATH_RESOURCE + "/" +PACKAGE_MAPPERS.replace(".", "/");
 
+        // Services相关路径
+        PACKAGE_SERVICE = PACKAGE_BASE + "." + PropertiesUtils.getString("package.service");
+        PACKAGE_SERVICE_IMPL = PACKAGE_BASE + "." + PropertiesUtils.getString("package.service.impl");
+        PATH_SERVICE = PATH_JAVA_BASE + "/" + PACKAGE_SERVICE.replace(".", "/");
+        PATH_SERVICE_IMPL = PATH_JAVA_BASE + "/" + PACKAGE_SERVICE_IMPL.replace(".", "/");
+
+        // VO 相关路径
+        PACKAGE_VO = PACKAGE_BASE + "." + PropertiesUtils.getString("package.vo");
+        PATH_VO = PATH_JAVA_BASE + "/" + PACKAGE_VO.replace(".", "/");
+
         PATH_UTILS = PATH_JAVA_BASE + "/" + PACKAGE_UTILS.replace(".", "/");
         PATH_ENUMS = PATH_JAVA_BASE + "/" + PACKAGE_ENUMS.replace(".", "/");
     }
@@ -111,6 +129,7 @@ public class Constants {
 //        System.out.println(PATH_JAVA_BASE);
 //        System.out.println(PACKAGE_BASE);
 //        System.out.println(PATH_PO);
-        System.out.println(PATH_MAPPERS_XML);
+        System.out.println(PATH_SERVICE);
+        System.out.println(PATH_SERVICE_IMPL);
     }
 }
