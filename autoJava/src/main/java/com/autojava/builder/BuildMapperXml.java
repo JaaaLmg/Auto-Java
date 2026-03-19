@@ -3,14 +3,14 @@ package com.autojava.builder;
 import com.autojava.bean.Constants;
 import com.autojava.bean.FieldInfo;
 import com.autojava.bean.TableInfo;
+import com.autojava.utils.StringUtils;
+import javafx.scene.effect.SepiaTone;
 import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
-import java.util.List;
-import java.util.Map;
-import java.util.StringJoiner;
+import java.util.*;
 
 public class BuildMapperXml {
     private static final Logger logger = LoggerFactory.getLogger(BuildMapperXml.class);
@@ -40,6 +40,11 @@ public class BuildMapperXml {
             generateExtendQueryConditions(tableInfo, bw);   // 生成扩展查询条件
             generateWholeQueryConditions(tableInfo, bw);    // 生成完整查询条件子句
             generateWholeQueryStatement(tableInfo, bw);     // 生成完整查询语句
+            generateInsertStatement(tableInfo, bw);     // 生成插入语句
+            generateInsertOrUpdateStatement(tableInfo, bw);     // 生成插入或更新语句
+            generateInsertBatchStatement(tableInfo, bw);        // 生成批量插入语句
+            generateInsertOrUpdateBatchStatement(tableInfo, bw);    // 生成插入或更新批量语句
+            generatePrimaryKeyStatement(tableInfo, bw);     // 生成根据主键查询、删除、修改的语句
 
             bw.newLine();
             bw.write("</mapper>");
@@ -216,12 +221,229 @@ public class BuildMapperXml {
         bw.newLine();
 
         bw.write("\t<!--查询数量的语句-->\n");
-        bw.write("\t<select id=\"selectCount\" resultType=\"java.lang.Integer\">\n");
+        bw.write("\t<select id=\"selectCount\" resultType=\"java.lang.Long\">\n");
         bw.write("\t\tSELECT count(1) FROM " + tableInfo.getTableName() + "\n");
         bw.write("\t\t<include refid=\"query_condition\"/>\n");
         bw.write("\t</select>\n");
         bw.newLine();
 
+    }
+
+    /**
+     * 生成插入语句
+     */
+    private static void generateInsertStatement(TableInfo tableInfo, BufferedWriter bw) throws IOException{
+        bw.write("\t<!--插入的语句 (匹配有值的字段)-->\n");
+        bw.write("\t<insert id=\"insert\" parameterType=\"" + Constants.PACKAGE_PO + "." + tableInfo.getBeanName() + "\">\n");
+
+        // 返回插入列的自增ID(如果存在)
+        FieldInfo autoIncrementFieldInfo = null;
+        for(FieldInfo fieldInfo : tableInfo.getFieldList()){
+            if(fieldInfo.getAutoIncrement()){
+                autoIncrementFieldInfo = fieldInfo;
+
+                bw.write("\t\t<selectKey resultType=\"java.lang.Integer\" keyProperty=\"bean.id\" order=\"AFTER\">\n");
+                bw.write("\t\t\tSELECT LAST_INSERT_ID()\n");
+                bw.write("\t\t</selectKey>\n");
+
+                break;
+            }
+        }
+
+        bw.write("\t\tINSERT INTO " + tableInfo.getTableName() + "\n");
+        bw.write("\t\t<trim prefix=\"(\" suffix=\")\" suffixOverrides=\",\">\n");
+        for(FieldInfo fieldInfo : tableInfo.getFieldList()){
+            bw.write("\t\t\t<if test=\"bean." + fieldInfo.getPropertyName() + " != null\">\n");
+            bw.write("\t\t\t\t" + fieldInfo.getFieldName() + ",\n");
+            bw.write("\t\t\t</if>\n");
+        }
+        bw.write("\t\t</trim>\n");
+
+        bw.write("\t\tVALUES\n");
+        bw.write("\t\t<trim prefix=\"(\" suffix=\")\" suffixOverrides=\",\">\n");
+        for(FieldInfo fieldInfo : tableInfo.getFieldList()){
+            bw.write("\t\t\t<if test=\"bean." + fieldInfo.getPropertyName() + " != null\">\n");
+            bw.write("\t\t\t\t#{bean." + fieldInfo.getPropertyName() + "},\n");
+            bw.write("\t\t\t</if>\n");
+        }
+        bw.write("\t\t</trim>\n");
+        bw.write("\t</insert>\n");
+
+        bw.newLine();
+
+    }
+
+    /**
+     * 生成插入或更新语句
+     */
+    private static void generateInsertOrUpdateStatement(TableInfo tableInfo, BufferedWriter bw) throws IOException{
+        bw.write("\t<!--插入或更新的语句 (匹配有值的字段)-->\n");
+        bw.write("\t<insert id=\"insertOrUpdate\" parameterType=\"" + Constants.PACKAGE_PO + "." + tableInfo.getBeanName() + "\">\n");
+        bw.write("\t\tINSERT INTO " + tableInfo.getTableName() + "\n");
+        bw.write("\t\t<trim prefix=\"(\" suffix=\")\" suffixOverrides=\",\">\n");
+        for(FieldInfo fieldInfo : tableInfo.getFieldList()){
+            bw.write("\t\t\t<if test=\"bean." + fieldInfo.getPropertyName() + " != null\">\n");
+            bw.write("\t\t\t\t" + fieldInfo.getFieldName() + ",\n");
+            bw.write("\t\t\t</if>\n");
+        }
+        bw.write("\t\t</trim>\n");
+
+        bw.write("\t\tVALUES\n");
+        bw.write("\t\t<trim prefix=\"(\" suffix=\")\" suffixOverrides=\",\">\n");
+        for(FieldInfo fieldInfo : tableInfo.getFieldList()){
+            bw.write("\t\t\t<if test=\"bean." + fieldInfo.getPropertyName() + " != null\">\n");
+            bw.write("\t\t\t\t#{bean." + fieldInfo.getPropertyName() + "},\n");
+            bw.write("\t\t\t</if>\n");
+        }
+        bw.write("\t\t</trim>\n");
+
+        bw.write("\t\tON DUPLICATE KEY UPDATE\n");
+        // 唯一索引不允许被修改
+        Map<String, List<FieldInfo>> keyIndexMap = tableInfo.getKeyIndexMap();
+        Set<String> keyIndexNameSet = new HashSet<>();
+        for(Map.Entry<String, List<FieldInfo>> entry : keyIndexMap.entrySet()){
+            List<FieldInfo> keyIndexFieldInfoList = entry.getValue();
+            for(FieldInfo fieldInfo : keyIndexFieldInfoList){
+                keyIndexNameSet.add(fieldInfo.getFieldName());
+            }
+        }
+        bw.write("\t\t<trim prefix=\"\" suffix=\"\" suffixOverrides=\",\">\n");
+        for(FieldInfo fieldInfo : tableInfo.getFieldList()){
+            if(keyIndexNameSet.contains(fieldInfo.getFieldName())) continue;
+            bw.write("\t\t\t<if test=\"bean." + fieldInfo.getPropertyName() + " != null\">\n");
+            bw.write("\t\t\t" + fieldInfo.getFieldName() + " = VALUES("+ fieldInfo.getFieldName()+"),\n");
+            bw.write("\t\t\t</if>\n");
+        }
+        bw.write("\t\t</trim>\n");
+
+        bw.write("\t</insert>\n");
+        bw.newLine();
+    }
+
+
+    /**
+     * 生成批量插入的语句
+     */
+    private static void generateInsertBatchStatement(TableInfo tableInfo, BufferedWriter bw) throws IOException{
+        bw.write("\t<!--批量插入的语句-->\n");
+        bw.write("\t<insert id=\"insertBatch\" parameterType=\"" + Constants.PACKAGE_PO + "." + tableInfo.getBeanName() + "\" useGeneratedKeys=\"true\" keyProperty=\"id\">\n");
+
+        StringJoiner fieldNameJoiner = new StringJoiner(",","(",")");
+        for(FieldInfo fieldInfo : tableInfo.getFieldList()){
+            if(fieldInfo.getAutoIncrement()){
+                continue;
+            }
+            fieldNameJoiner.add(fieldInfo.getFieldName());
+        }
+        bw.write("\t\tINSERT INTO " + tableInfo.getTableName() + fieldNameJoiner.toString() + "\n");
+        StringJoiner valueNameJoiner = new StringJoiner(",");
+        for(FieldInfo fieldInfo : tableInfo.getFieldList()){
+            if(fieldInfo.getAutoIncrement()){
+                continue;
+            }
+            valueNameJoiner.add("#{item." + fieldInfo.getPropertyName() + "}");
+        }
+        bw.write("\t\tVALUES\n");
+        bw.write("\t\t<foreach collection=\"list\" item=\"item\" separator=\",\">\n");
+        bw.write("\t\t\t(" + valueNameJoiner.toString() + ")\n");
+        bw.write("\t\t</foreach>\n");
+        bw.write("\t</insert>\n");
+        bw.newLine();
+    }
+
+
+    /**
+     * 生成批量插入或更新的语句
+     */
+    private static void generateInsertOrUpdateBatchStatement(TableInfo tableInfo, BufferedWriter bw) throws IOException{
+        bw.write("\t<!--批量插入或更新的语句-->\n");
+        bw.write("\t<insert id=\"insertOrUpdateBatch\" parameterType=\"" + Constants.PACKAGE_PO + "." + tableInfo.getBeanName() + "\" useGeneratedKeys=\"true\" keyProperty=\"id\">\n");
+        StringJoiner fieldNameJoiner = new StringJoiner(",","(",")");
+        for(FieldInfo fieldInfo : tableInfo.getFieldList()){
+            if(fieldInfo.getAutoIncrement()){
+                continue;
+            }
+            fieldNameJoiner.add(fieldInfo.getFieldName());
+        }
+        bw.write("\t\tINSERT INTO " + tableInfo.getTableName() + fieldNameJoiner.toString() + "\n");
+        StringJoiner valueNameJoiner = new StringJoiner(",");
+        for(FieldInfo fieldInfo : tableInfo.getFieldList()){
+            if(fieldInfo.getAutoIncrement()){
+                continue;
+            }
+            valueNameJoiner.add("#{item." + fieldInfo.getPropertyName() + "}");
+        }
+        bw.write("\t\tVALUES\n");
+        bw.write("\t\t<foreach collection=\"list\" item=\"item\" separator=\",\">\n");
+        bw.write("\t\t\t(" + valueNameJoiner.toString() + ")\n");
+        bw.write("\t\t</foreach>\n");
+
+        bw.write("\t\tON DUPLICATE KEY UPDATE\n");
+        StringJoiner updateNameJoiner = new StringJoiner(",\n\t\t\t");
+        for(FieldInfo fieldInfo : tableInfo.getFieldList()){
+            if(fieldInfo.getAutoIncrement()){
+                continue;
+            }
+            updateNameJoiner.add(fieldInfo.getFieldName() + " = VALUES("+ fieldInfo.getFieldName()+")");
+        }
+        bw.write("\t\t\t" + updateNameJoiner.toString() + "\n");
+        bw.write("\t</insert>\n");
+        bw.newLine();
+    }
+
+
+    /**
+     * 生成根据主键查询、删除、修改的语句
+     */
+    private static void generatePrimaryKeyStatement(TableInfo tableInfo, BufferedWriter bw) throws IOException{
+        Map<String, List<FieldInfo>> keyIndexMap = tableInfo.getKeyIndexMap();
+        for(Map.Entry<String, List<FieldInfo>> entry : keyIndexMap.entrySet()) {
+            List<FieldInfo> keyFieldList = entry.getValue();
+
+            // 生成方法名和注释
+            StringJoiner keyMethodNameJoiner = new StringJoiner("And");
+            StringJoiner CommentNameJoiner = new StringJoiner("和", "根据", "");
+            for(FieldInfo fieldInfo : keyFieldList){
+                keyMethodNameJoiner.add(StringUtils.upperCaseFieldLetter(fieldInfo.getPropertyName()));
+                CommentNameJoiner.add(StringUtils.upperCaseFieldLetter(fieldInfo.getPropertyName()));
+            }
+
+            // 生成where子句
+            StringJoiner whereJoiner = new StringJoiner(" AND ");
+            for(FieldInfo fieldInfo : keyFieldList){
+                whereJoiner.add(fieldInfo.getFieldName() + " = #{" + fieldInfo.getPropertyName() + "}");
+            }
+
+
+            // 生成查询语句
+            bw.write("\t<!--" + CommentNameJoiner.toString() + "查询-->\n");
+            bw.write("\t<select id=\"selectBy" + keyMethodNameJoiner.toString() + "\"  resultMap=\"base_result_map\">\n");
+            bw.write("\t\tSELECT <include refid=\"base_column_list\"/> FROM " + tableInfo.getTableName() + " WHERE " + whereJoiner.toString()+"\n");
+            bw.write("\t</select>\n");
+            bw.newLine();
+
+            // 生成删除语句
+            bw.write("\t<!--" + CommentNameJoiner.toString() + "删除-->\n");
+            bw.write("\t<delete id=\"deleteBy" + keyMethodNameJoiner.toString() + "\" >\n");
+            bw.write("\t\tDELETE FROM " + tableInfo.getTableName() + " WHERE " + whereJoiner.toString()+"\n");
+            bw.write("\t</delete>\n");
+            bw.newLine();
+
+            // 生成修改语句
+            bw.write("\t<!--" + CommentNameJoiner.toString() + "修改-->\n");
+            bw.write("\t<update id=\"updateBy" + keyMethodNameJoiner.toString() + "\" parameterType=\"" + Constants.PACKAGE_PO + "." + tableInfo.getBeanName() + "\">\n");
+            bw.write("\t\tUPDATE " + tableInfo.getTableName() + "\n");
+            bw.write("\t\t<set>\n");
+            for(FieldInfo fieldInfo : tableInfo.getFieldList()){
+                bw.write("\t\t\t<if test=\"bean." + fieldInfo.getPropertyName() + " != null\">\n");
+                bw.write("\t\t\t\t" + fieldInfo.getFieldName() + " = #{bean." + fieldInfo.getPropertyName() + "},\n");
+                bw.write("\t\t\t</if>\n");
+            }
+            bw.write("\t\t</set>\n");
+            bw.write("\t\tWHERE " + whereJoiner.toString()+"\n");
+            bw.write("\t</update>\n");
+            bw.newLine();
+        }
     }
 
 }

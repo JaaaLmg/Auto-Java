@@ -113,13 +113,13 @@ public class BuildPo {
                         propertyNameFormatted = "DateUtils.format(" + fieldInfo.getPropertyName() + ", DateTimePatternEnum.YYYY_MM_DD.getPattern())";
                     }
 
-                    joiner.add("\\n\\t" + fieldInfo.getComment() + ":\" + (" + fieldInfo.getPropertyName() + " == null ? \"空\" : " + propertyNameFormatted + ")");
+                    joiner.add(" " + fieldInfo.getComment() + ":\" + (" + fieldInfo.getPropertyName() + " == null ? \"空\" : " + propertyNameFormatted + ")");
                 }
                 String toString = joiner.toString();
 
                 bw.write("\t@Override\n");
                 bw.write("\tpublic String toString() {\n");
-                bw.write("\t\treturn \"" + tableInfo.getComment() + " [\" + " + toString + " + \"\\n]\";\n");
+                bw.write("\t\treturn \"" + tableInfo.getComment() + " [\" + " + toString + " + \" ]\";\n");
                 bw.write("\t}\n");
             }
 
