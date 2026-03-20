@@ -37,6 +37,7 @@ public class Constants {
     // 路径相关
     public static String PATH_BASE;
     public static String PATH_JAVA = "java";
+    public static String PATH_RESOURCE = "resources";
     public static String PATH_JAVA_BASE;
     public static String PATH_PO;
     public static String PATH_QUERY;
@@ -51,7 +52,6 @@ public class Constants {
     public static String PATH_CONTROLLER;
 
     // 包名相关
-    public static String PATH_RESOURCE = "resources";
     public static String PACKAGE_BASE;
     public static String PACKAGE_PO;
     public static String PACKAGE_QUERY;
