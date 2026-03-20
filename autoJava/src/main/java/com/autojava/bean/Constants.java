@@ -17,6 +17,7 @@ public class Constants {
     public static String SUFFIX_BEAN_QUERY_TIME_END;
     public static String SUFFIX_MAPPERS;
     public static String SUFFIX_SERVICE;
+    public static String SUFFIX_CONTROLLER;
 
     // 属性相关
     public static String IGNORE_BEAN_TOJSON_FIELD;
@@ -46,6 +47,8 @@ public class Constants {
     public static String PATH_SERVICE;
     public static String PATH_SERVICE_IMPL;
     public static String PATH_VO;
+    public static String PATH_EXCEPTION;
+    public static String PATH_CONTROLLER;
 
     // 包名相关
     public static String PATH_RESOURCE = "resources";
@@ -58,6 +61,8 @@ public class Constants {
     public static String PACKAGE_SERVICE;
     public static String PACKAGE_SERVICE_IMPL;
     public static String PACKAGE_VO;
+    public static String PACKAGE_EXCEPTION;
+    public static String PACKAGE_CONTROLLER;
 
     static {
         PROJECT_AUTHOR = PropertiesUtils.getString("project.author");
@@ -69,6 +74,7 @@ public class Constants {
         SUFFIX_BEAN_QUERY_TIME_END = PropertiesUtils.getString("suffix.bean.query.time.end");
         SUFFIX_MAPPERS = PropertiesUtils.getString("suffix.mappers");
         SUFFIX_SERVICE = PropertiesUtils.getString("suffix.service");
+        SUFFIX_CONTROLLER = PropertiesUtils.getString("suffix.controller");
 
         IGNORE_GETTER_SETTER = Boolean.valueOf(PropertiesUtils.getString("ignore.bean.getterSetter"));
         IGNORE_TO_STRING = Boolean.valueOf(PropertiesUtils.getString("ignore.bean.toString"));
@@ -114,7 +120,18 @@ public class Constants {
         PACKAGE_VO = PACKAGE_BASE + "." + PropertiesUtils.getString("package.vo");
         PATH_VO = PATH_JAVA_BASE + "/" + PACKAGE_VO.replace(".", "/");
 
+        // exception 相关路径
+        PACKAGE_EXCEPTION = PACKAGE_BASE + "." + PropertiesUtils.getString("package.exception");
+        PATH_EXCEPTION = PATH_JAVA_BASE + "/" + PACKAGE_EXCEPTION.replace(".", "/");
+
+        // controller 相关路径
+        PACKAGE_CONTROLLER = PACKAGE_BASE + "." + PropertiesUtils.getString("package.controller");
+        PATH_CONTROLLER = PATH_JAVA_BASE + "/" + PACKAGE_CONTROLLER.replace(".", "/");
+
+        // utils 相关路径
         PATH_UTILS = PATH_JAVA_BASE + "/" + PACKAGE_UTILS.replace(".", "/");
+
+        // enums 相关路径
         PATH_ENUMS = PATH_JAVA_BASE + "/" + PACKAGE_ENUMS.replace(".", "/");
     }
 

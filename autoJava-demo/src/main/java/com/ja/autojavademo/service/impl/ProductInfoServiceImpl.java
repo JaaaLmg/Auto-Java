@@ -6,7 +6,7 @@ import com.ja.autojavademo.entity.po.ProductInfo;
 import com.ja.autojavademo.entity.query.ProductInfoQuery;
 import com.ja.autojavademo.entity.query.SimplePage;
 import com.ja.autojavademo.entity.enums.PageSize;
-import com.ja.autojavademo.vo.PaginationResultVO;
+import com.ja.autojavademo.entity.vo.PaginationResultVO;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * @Description 商品信息业务功能实现类
  * @Author LumingJia
- * @Date 2026/03/19
+ * @Date 2026/03/20
  */
 @Service("ProductInfoService")
 public class ProductInfoServiceImpl implements ProductInfoService {

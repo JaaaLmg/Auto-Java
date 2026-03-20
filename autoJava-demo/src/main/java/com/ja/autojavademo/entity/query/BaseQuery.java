@@ -1,5 +1,4 @@
 package com.ja.autojavademo.entity.query;
-
 public class BaseQuery {
     private SimplePage simplePage;
     private Integer pageNo;

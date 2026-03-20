@@ -1,7 +1,5 @@
 package com.ja.autojavademo.entity.query;
-
 import com.ja.autojavademo.entity.enums.PageSize;
-
 public class SimplePage {
     /**
      * 当前页码

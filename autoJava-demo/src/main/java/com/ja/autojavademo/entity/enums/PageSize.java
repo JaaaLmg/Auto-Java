@@ -1,5 +1,4 @@
 package com.ja.autojavademo.entity.enums;
-
 public enum PageSize {
     SIZE10(10),
     SIZE20(20),

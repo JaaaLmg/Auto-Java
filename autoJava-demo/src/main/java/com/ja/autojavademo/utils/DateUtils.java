@@ -1,5 +1,4 @@
 package com.ja.autojavademo.utils;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;

@@ -1,5 +1,4 @@
-package com.ja.autojavademo.vo;
-
+package com.ja.autojavademo.entity.vo;
 import java.util.ArrayList;
 import java.util.List;
 

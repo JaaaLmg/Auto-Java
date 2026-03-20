@@ -51,6 +51,38 @@ public class BuildTemplates {
         // 生成分页结果类
         headerInfoList.add("package " + Constants.PACKAGE_VO + ";\n");
         build(headerInfoList,"PaginationResultVO", Constants.PATH_VO);
+        headerInfoList.clear();
+
+        // 生成响应状态码枚举类
+        headerInfoList.add("package " + Constants.PACKAGE_ENUMS + ";\n");
+        build(headerInfoList,"ResponseCodeEnum", Constants.PATH_ENUMS);
+        headerInfoList.clear();
+
+        // 生成请求响应vo类
+        headerInfoList.add("package " + Constants.PACKAGE_VO + ";\n");
+        build(headerInfoList,"ResponseVO", Constants.PATH_VO);
+        headerInfoList.clear();
+
+        // 生成业务异常类
+        headerInfoList.add("package " + Constants.PACKAGE_EXCEPTION + ";\n");
+        headerInfoList.add("import " + Constants.PACKAGE_ENUMS + ".ResponseCodeEnum;\n");
+        build(headerInfoList,"BusinessException", Constants.PATH_EXCEPTION);
+        headerInfoList.clear();
+
+        // 生成Controller基类
+        headerInfoList.add("package " + Constants.PACKAGE_CONTROLLER + ";\n");
+        headerInfoList.add("import " + Constants.PACKAGE_VO + ".ResponseVO;\n");
+        headerInfoList.add("import " + Constants.PACKAGE_ENUMS + ".ResponseCodeEnum;\n");
+        build(headerInfoList,"BaseController", Constants.PATH_CONTROLLER);
+        headerInfoList.clear();
+
+        // 构建全局异常处理类
+        headerInfoList.add("package " + Constants.PACKAGE_CONTROLLER + ";\n");
+        headerInfoList.add("import " + Constants.PACKAGE_VO + ".ResponseVO;\n");
+        headerInfoList.add("import " + Constants.PACKAGE_EXCEPTION + ".BusinessException;\n");
+        headerInfoList.add("import " + Constants.PACKAGE_ENUMS + ".ResponseCodeEnum;\n");
+        build(headerInfoList,"GlobalExceptionHandlerController", Constants.PATH_CONTROLLER);
+        headerInfoList.clear();
     }
 
     public static void build(List<String> headerInfoList, String fileName, String outputPath) {
@@ -69,7 +101,7 @@ public class BuildTemplates {
 
             for(String headerInfo : headerInfoList){
                 bw.write(headerInfo);
-                bw.newLine();
+//                bw.newLine();
             }
 
             String lineInfo = null;

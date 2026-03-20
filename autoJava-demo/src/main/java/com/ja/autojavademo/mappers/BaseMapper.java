@@ -1,5 +1,4 @@
 package com.ja.autojavademo.mappers;
-
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
