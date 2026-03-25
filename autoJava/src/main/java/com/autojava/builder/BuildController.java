@@ -63,7 +63,7 @@ public class BuildController {
             // 创建方法
             BuildComment.createMethodComment(bw, "根据查询条件分页查询");
             bw.write("\t@RequestMapping(\"loadDataList\")\n");
-            bw.write("\tpublic ResponseVO loadDataList(ProductInfoQuery query) {\n");
+            bw.write("\tpublic ResponseVO loadDataList("+ tableInfo.getBeanName() + "Query query) {\n");
             bw.write("\t\t return getSuccessResponseVO(" + StringUtils.lowerCaseFieldLetter(ServiceName) + ".queryPage(query));\n");
             bw.write("\t}\n\n");
 
