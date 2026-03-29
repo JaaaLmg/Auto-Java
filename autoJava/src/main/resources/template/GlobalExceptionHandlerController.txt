@@ -24,7 +24,7 @@ public class GlobalExceptionHandlerController extends BaseController{
         }
         else if(e instanceof BusinessException) {
             BusinessException businessException = (BusinessException) e;
-            ajaxResponse.setCode(businessException.getCode());
+            ajaxResponse.setCode(businessException.getCode() == null ? ResponseCodeEnum.CODE_600.getCode() : businessException.getCode());
             ajaxResponse.setInfo(businessException.getMessage());
             ajaxResponse.setStatus(STATUS_ERROR);
         }
