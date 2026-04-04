@@ -1,7 +1,7 @@
 package com.autojava;
 
 import com.autojava.bean.TableInfo;
-import com.autojava.bean.Constants;y
+import com.autojava.bean.Constants;
 import com.autojava.builder.*;
 import com.autojava.utils.FileCheckUtils;
 
