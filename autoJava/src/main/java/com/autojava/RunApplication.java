@@ -1,6 +1,7 @@
 package com.autojava;
 
 import com.autojava.bean.TableInfo;
+import com.autojava.bean.Constants;y
 import com.autojava.builder.*;
 import com.autojava.utils.FileCheckUtils;
 
@@ -24,5 +25,7 @@ public class RunApplication {
             BuildServiceImpl.execute(tableInfo);
             BuildController.execute(tableInfo);
         }
+
+        System.out.println("生成完毕！ 代码路径: " + Constants.PATH_BASE);
     }
 }
