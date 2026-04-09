@@ -242,7 +242,7 @@ public class BuildMapperXml {
             if(fieldInfo.getAutoIncrement()){
                 autoIncrementFieldInfo = fieldInfo;
 
-                bw.write("\t\t<selectKey resultType=\"java.lang.Integer\" keyProperty=\"bean.id\" order=\"AFTER\">\n");
+                bw.write("\t\t<selectKey resultType=\"java.lang.Integer\" keyProperty=\"bean." + autoIncrementFieldInfo.getPropertyName() + "\" order=\"AFTER\">\n");
                 bw.write("\t\t\tSELECT LAST_INSERT_ID()\n");
                 bw.write("\t\t</selectKey>\n");
 
@@ -325,8 +325,22 @@ public class BuildMapperXml {
      * 生成批量插入的语句
      */
     private static void generateInsertBatchStatement(TableInfo tableInfo, BufferedWriter bw) throws IOException{
+        // 查找自增主键字段
+        FieldInfo autoIncrementField = null;
+        for(FieldInfo fieldInfo : tableInfo.getFieldList()){
+            if(fieldInfo.getAutoIncrement()){
+                autoIncrementField = fieldInfo;
+                break;
+            }
+        }
+
         bw.write("\t<!--批量插入的语句-->\n");
-        bw.write("\t<insert id=\"insertBatch\" parameterType=\"" + Constants.PACKAGE_PO + "." + tableInfo.getBeanName() + "\" useGeneratedKeys=\"true\" keyProperty=\"id\">\n");
+        // 根据是否有自增主键决定是否添加keyProperty属性
+        if(autoIncrementField != null){
+            bw.write("\t<insert id=\"insertBatch\" parameterType=\"" + Constants.PACKAGE_PO + "." + tableInfo.getBeanName() + "\" useGeneratedKeys=\"true\" keyProperty=\"" + autoIncrementField.getPropertyName() + "\">\n");
+        } else {
+            bw.write("\t<insert id=\"insertBatch\" parameterType=\"" + Constants.PACKAGE_PO + "." + tableInfo.getBeanName() + "\">\n");
+        }
 
         StringJoiner fieldNameJoiner = new StringJoiner(",","(",")");
         for(FieldInfo fieldInfo : tableInfo.getFieldList()){
@@ -356,8 +370,22 @@ public class BuildMapperXml {
      * 生成批量插入或更新的语句
      */
     private static void generateInsertOrUpdateBatchStatement(TableInfo tableInfo, BufferedWriter bw) throws IOException{
+        // 查找自增主键字段
+        FieldInfo autoIncrementField = null;
+        for(FieldInfo fieldInfo : tableInfo.getFieldList()){
+            if(fieldInfo.getAutoIncrement()){
+                autoIncrementField = fieldInfo;
+                break;
+            }
+        }
+
         bw.write("\t<!--批量插入或更新的语句-->\n");
-        bw.write("\t<insert id=\"insertOrUpdateBatch\" parameterType=\"" + Constants.PACKAGE_PO + "." + tableInfo.getBeanName() + "\" useGeneratedKeys=\"true\" keyProperty=\"id\">\n");
+        // 根据是否有自增主键决定是否添加keyProperty属性
+        if(autoIncrementField != null){
+            bw.write("\t<insert id=\"insertOrUpdateBatch\" parameterType=\"" + Constants.PACKAGE_PO + "." + tableInfo.getBeanName() + "\" useGeneratedKeys=\"true\" keyProperty=\"" + autoIncrementField.getPropertyName() + "\">\n");
+        } else {
+            bw.write("\t<insert id=\"insertOrUpdateBatch\" parameterType=\"" + Constants.PACKAGE_PO + "." + tableInfo.getBeanName() + "\">\n");
+        }
         StringJoiner fieldNameJoiner = new StringJoiner(",","(",")");
         for(FieldInfo fieldInfo : tableInfo.getFieldList()){
             if(fieldInfo.getAutoIncrement()){
